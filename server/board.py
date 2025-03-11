@@ -34,6 +34,7 @@ class Board():
                 if self.get_cell_num(click_coord)==0:
                     surround=((-1,-1),(0,-1),(1,-1),(-1,0),(1,0),(-1,1),(0,1),(1,1))
                     for rel_coord in surround:
+                        # NEED IF IN HERE
                         self.click((click_coord[0]+rel_coord[0],click_coord[1]+rel_coord[1]))
                 return 0
         return 1
