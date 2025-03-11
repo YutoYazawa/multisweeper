@@ -25,8 +25,29 @@ class Board():
     def toggle_flag(self, change_coord:tuple[int,int]):
         self.write(change_coord,change_coord,self.read(change_coord,change_coord,self.flag_list),self.flag_list,filler=False)
     
-    def click(self, click_coord:tuple[int,int]):
-        pass
+    def click(self, click_coord:tuple[int,int]) -> int:
+        if not self.read(click_coord,click_coord,self.display_list)[0][0] and not self.read(click_coord,click_coord,self.flag_list)[0][0]:
+            self.write(click_coord,click_coord,[[True]],self.display_list,filler=False)
+            if self.read(click_coord,click_coord,self.bomb_list)[0][0]==1:
+                return -1
+            else:
+                if self.get_cell_num(click_coord)==0:
+                    surround=((-1,-1),(0,-1),(1,-1),(-1,0),(1,0),(-1,1),(0,1),(1,1))
+                    for rel_coord in surround:
+                        self.click((click_coord[0]+rel_coord[0],click_coord[1]+rel_coord[1]))
+                return 0
+        return 1
+    
+    def get_cell_num(self, get_coord:tuple[int,int]) -> int:
+        if self.read(get_coord,get_coord,self.bomb_list)==1:
+            return -1
+        surround=((-1,-1),(0,-1),(1,-1),(-1,0),(1,0),(-1,1),(0,1),(1,1))
+        num=0
+        for rel_coord in surround:
+            a=(get_coord[0]+rel_coord[0],get_coord[1]+rel_coord[1])
+            if self.read((a[0],a[1]),(a[0],a[1]),self.bomb_list)[0][0]==1:
+                num+=1
+        return num
     
     def read(self,start_coord:tuple[int,int],end_coord:tuple[int,int],origin_list:list[list[list[None]]]) -> list[list[int]]:
         if start_coord[0]>end_coord[0] and start_coord[1]>end_coord[1]:
