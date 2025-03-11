@@ -23,7 +23,7 @@ class Board():
         self.flag_list=[[[False for i in range(1)]for j in range(1)]for k in range(4)]
     
     def toggle_flag(self, change_coord:tuple[int,int]):
-        pass
+        self.write(change_coord,change_coord,self.read(change_coord,change_coord,self.flag_list),self.flag_list,filler=False)
     
     def click(self, click_coord:tuple[int,int]):
         pass
