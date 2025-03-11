@@ -22,6 +22,12 @@ class Board():
         self.display_list=[[[False for i in range(1)]for j in range(1)]for k in range(4)]
         self.flag_list=[[[False for i in range(1)]for j in range(1)]for k in range(4)]
     
+    def toggle_flag(self, change_coord:tuple[int,int]):
+        pass
+    
+    def click(self, click_coord:tuple[int,int]):
+        pass
+    
     def read(self,start_coord:tuple[int,int],end_coord:tuple[int,int],origin_list:list[list[list[None]]]) -> list[list[int]]:
         if start_coord[0]>end_coord[0] and start_coord[1]>end_coord[1]:
             return [[]]
