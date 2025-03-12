@@ -53,9 +53,22 @@ class Board():
     def read(self,start_coord:tuple[int,int],end_coord:tuple[int,int],origin_list:list[list[list[None]]]) -> list[list[int]]:
         if start_coord[0]>end_coord[0] and start_coord[1]>end_coord[1]:
             return [[]]
-        print("x:{} y:{}".format(list(range(start_coord[0],end_coord[0]+1)),list(range(start_coord[1],end_coord[1]+1))))
-        for i in range(start_coord[0],end_coord[0]+1):
-            print("x:{} list:{}".format(i,origin_list[0][i]))
+        #print("Len_1_x:{} Len_1_y:{}".format(len(origin_list[0]),len(origin_list[0][0])))
+        for y in range(start_coord[1],end_coord[1]+1):
+            for x in range(start_coord[0],end_coord[0]+1):
+                #print("X:{} Y:{}".format(x,y))
+                if x>=0 and y>=0:
+                    if len(origin_list[0])<=x or len(origin_list[0][0])<=y:
+                        return [[-1]]
+                elif x<0 and y>=0:
+                    if len(origin_list[1])<=-x-1 or len(origin_list[1][0])<=y:
+                        return [[-1]]
+                elif x<0 and y<0:
+                    if len(origin_list[2])<=-x-1 or len(origin_list[2][0])<=-y-1:
+                        return [[-1]]
+                elif x>=0 and y<0:
+                    if len(origin_list[3])<=x or len(origin_list[3][0])<=-y-1:
+                        return [[-1]]
         return [[origin_list[0][x][y] if x>=0 and y>=0 else (origin_list[1][-x-1][y] if x<0 and y>=0 else(origin_list[2][-x-1][-y-1] if x<0 and y<0 else origin_list[3][x][-y-1])) for x in range(start_coord[0],end_coord[0]+1)]for y in range(start_coord[1],end_coord[1]+1)]
     
     def write(self,start_coord:tuple[int,int],end_coord:tuple[int,int],write_list:list[list[int]],dest_list:list[list[list[None]]],filler=0xff) -> int:
